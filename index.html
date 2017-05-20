@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<script src="form-validator.js" async defer></script>
+
+
+
+<body>
+    <form id="registerForm" method="POST">
+        <input type="text" name="userName">
+        <input type="password" name="password">
+        <input type="text" name="phoneNumber">
+        <button>submit</button>
+    </form>
+</body>
+<script>
+    var validateFunc = function () {
+        var validator = new Validator()
+        validator.add(registerForm.userName, [{
+            strategy: 'isNonEmpty',
+            errorMsg: 'Empty'
+        }])
+
+        validator.add(registerForm.password, [{
+            strategy: 'isNonEmpty',
+            errorMsg: 'PassWordEmpty'
+        },
+        {
+            strategy: 'minLength:6',
+            errorMsg: 'ERROR'
+        }])
+        var errorMsg = validator.start()
+        return errorMsg
+    }
+
+
+    var registerForm = document.getElementById('registerForm')
+
+    registerForm.onsubmit = function () {
+        var errorMsg = validateFunc()
+        if (errorMsg) {
+            alert(errorMsg)
+            return false
+        }
+    }
+
+</script>
+
+</html>
